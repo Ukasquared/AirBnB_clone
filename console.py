@@ -12,6 +12,7 @@ class DConsole(cmd.Cmd):
         print("hello," + message)
     
     def do_EOF(self, eof):
+        print('\n')
         return True
 
 if __name__ == "__main__":
