@@ -15,29 +15,29 @@ class FileStorage:
         """ returns all the saved object"""
         # we  need make it accessble by all methods
         # I changed from self to FileStorage.
-        return FileStorage.__objects
+        return self.__objects
     
     def new(self, obj):
         """add key value pairs to __object"""
         key = f"{obj.__class__.__name__}{obj.id}"
         # same thing here, we need make it available to all
-        FileStorage.__objects[key] = obj
+        self.__objects[key] = obj
 
     def save(self):
         """save serialized dictionary in a file"""
         new_dicts = {}
         for key, value in FileStorage.__objects.items():
             new_dicts[key] = value.to_dict()
-        with open(FileStorage.__file_path, 'w') as file_string:
+        with open(self.__file_path, 'w') as file_string:
             json.dump(new_dicts, file_string)
     
     def reload(self):
         """ deserializes the JSON file to objects"""
         try:
-            with open(FileStorage.__file_path, 'r') as file_string:
+            with open(self.__file_path, 'r') as file_string:
                 objects = json.load(file_string)
                 for key, value in objects.items():
                     obj = BaseModel(**value)
-                    FileStorage.__objects[key] = obj
+                    self.__objects[key] = obj
         except FileNotFoundError:
             pass
