@@ -4,6 +4,7 @@ import uuid
 from datetime import datetime
 import models
 
+
 class BaseModel:
     """create the base class"""
     def __init__(self, *args, **kwargs):
@@ -24,11 +25,11 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             models.storage.new(self)
-    
+
     def __str__(self):
         """returns information about the object"""
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
-    
+
     def save(self):
         """updates the time when object is modified"""
         self.updated_at = datetime.now()

@@ -10,17 +10,18 @@ from models.place import Place
 from models.review import Review
 import shlex
 
+
 class HBNBCommand(cmd.Cmd):
     """
     Basic implementation of the console
     """
     prompt = '(hbnb) '
-    class_names = ["BaseModel", 
-                   "User", 
-                   "Place", 
-                   "State", 
-                   "City", 
-                   "Amenity", 
+    class_names = ["BaseModel",
+                   "User",
+                   "Place",
+                   "State",
+                   "City",
+                   "Amenity",
                    "Review"
                    ]
 
@@ -89,7 +90,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
         else:
             print("** class doesn't exist **")
-    
+
     def do_all(self, model):
         """show all instance according to class name or not"""
         obj_list = []
@@ -133,9 +134,9 @@ class HBNBCommand(cmd.Cmd):
                     setattr(storage.all()[key], all_arg[2], all_arg[3])
                     storage.all()[key].save()
                     exist = True
-                if exist == True:
+                if exist is True:
                     break
-            if exist == False:
+            if exist is False:
                 print("** no instance found **")
         else:
             print("** class doesn't exist **")
@@ -145,9 +146,10 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        """This wont allow the last excecuted command to repeat 
+        """This wont allow the last excecuted command to repeat
         when the ENTER key is pressed"""
         pass
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
