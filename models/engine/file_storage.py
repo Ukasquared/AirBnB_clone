@@ -19,9 +19,14 @@ class FileStorage:
     
     def new(self, obj):
         """add key value pairs to __object"""
+<<<<<<< HEAD
+        key = f"{obj.__class__.__name__}.{obj.id}"
+        self.__objects[key] = obj
+=======
         key = f"{obj.__class__.__name__}{obj.id}"
         # same thing here, we need make it available to all
         FileStorage.__objects[key] = obj
+>>>>>>> 2bfa8498ca5457502ada362148995c2b89a6b35e
 
     def save(self):
         """save serialized dictionary in a file"""
