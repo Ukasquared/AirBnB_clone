@@ -2,6 +2,7 @@
 """ filestorage module"""
 import json
 from models.base_model import BaseModel
+from models.user import User
 
 class FileStorage:
     """serializes instances to JSON
@@ -12,28 +13,36 @@ class FileStorage:
 
     def all(self):
         """ returns all the saved object"""
-        return self.__objects
+        # we  need make it accessble by all methods
+        # I changed from self to FileStorage.
+        return FileStorage.__objects
     
     def new(self, obj):
         """add key value pairs to __object"""
+<<<<<<< HEAD
         key = f"{obj.__class__.__name__}.{obj.id}"
         self.__objects[key] = obj
+=======
+        key = f"{obj.__class__.__name__}{obj.id}"
+        # same thing here, we need make it available to all
+        FileStorage.__objects[key] = obj
+>>>>>>> 2bfa8498ca5457502ada362148995c2b89a6b35e
 
     def save(self):
         """save serialized dictionary in a file"""
         new_dicts = {}
-        for key, value in self.__objects.items():
+        for key, value in FileStorage.__objects.items():
             new_dicts[key] = value.to_dict()
-        with open(self.__file_path, 'w') as file_string:
+        with open(FileStorage.__file_path, 'w') as file_string:
             json.dump(new_dicts, file_string)
     
     def reload(self):
         """ deserializes the JSON file to objects"""
         try:
-            with open(self.__file_path, 'r') as file_string:
+            with open(FileStorage.__file_path, 'r') as file_string:
                 objects = json.load(file_string)
                 for key, value in objects.items():
                     obj = BaseModel(**value)
-                    self.__objects[key] = obj
+                    FileStorage.__objects[key] = obj
         except FileNotFoundError:
             pass
