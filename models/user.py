@@ -2,6 +2,7 @@
 """ importing the parent class """
 from models.base_model import BaseModel
 
+
 class User(BaseModel):
     """
     A class User that inherites from BseModel

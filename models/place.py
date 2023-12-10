@@ -4,6 +4,7 @@ import from the models
 """
 from models.base_model import BaseModel
 
+
 class Place(BaseModel):
     """
     inheriting from BaseModel
