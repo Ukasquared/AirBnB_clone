@@ -27,7 +27,7 @@ class FileStorage:
     def save(self):
         """save serialized dictionary in a file"""
         new_dicts = {}
-        for key, value in FileStorage.__objects.items():
+        for key, value in self.__objects.items():
             new_dicts[key] = value.to_dict()
         with open(self.__file_path, 'w') as file_string:
             json.dump(new_dicts, file_string)
