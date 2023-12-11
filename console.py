@@ -111,8 +111,8 @@ class HBNBCommand(cmd.Cmd):
                     obj_list.append(str(storage.all()[key]))
             if exist is True:
                 print(obj_list)
-            else:
-                print("** class doesn't exist **")
+        else:
+            print("** class doesn't exist **")
 
     def do_update(self, model):
         """updates an instance"""
