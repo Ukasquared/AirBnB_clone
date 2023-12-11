@@ -1,8 +1,13 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ filestorage module"""
 import json
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
@@ -23,6 +28,20 @@ class FileStorage:
         key = f"{obj.__class__.__name__}{obj.id}"
         # same thing here, we need make it available to all
         self.__objects[key] = obj
+
+    def classes(self):
+        """classes with their
+        names
+        """
+        classes = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "Place": Place,
+            "Amenity": Amenity,
+            "Review": Review,
+            "City": City,
+            "State": State
+        }
 
     def save(self):
         """save serialized dictionary in a file"""
