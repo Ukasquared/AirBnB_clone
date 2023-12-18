@@ -1,0 +1,44 @@
+.filters {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background-color: #ffffff;
+    height: 70px;
+    width: 100%;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+button {
+    display: block;
+     font-size: 18px;
+     background-color: #ff5a5f;
+     color: #ffffff;
+     height: 48px;
+     flex-basis: 20%;
+     border: none;
+     border-radius: 4px;
+     margin-right: 30px;
+}
+button:hover {
+    opacity: 90%;
+}
+
+.locations {
+    height: 100%;
+    flex-basis: 25%;
+    border-right: 1px  solid #dddddd;
+    padding: 15px 20px;
+}
+.amenities {
+    height: 100%;
+    flex-basis: 25%;
+    flex-grow: 1;
+    padding: 15px 20px;
+}
+.locations h3, .amenities h3 {
+    font-weight: 600;
+}
+.locations h4, .amenities h4 {
+    font-weight: 400;
+    font-size: 14px;
+}
