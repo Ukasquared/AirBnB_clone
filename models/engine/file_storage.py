@@ -1,8 +1,13 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ filestorage module"""
 import json
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
@@ -20,9 +25,24 @@ class FileStorage:
 
     def new(self, obj):
         """add key value pairs to __object"""
-        key = f"{obj.__class__.__name__}{obj.id}"
+        key = f"{obj.__class__.__name__}.{obj.id}"
         # same thing here, we need make it available to all
         self.__objects[key] = obj
+
+    def classes(self):
+        """classes with their
+        names
+        """
+        class_names = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "Place": Place,
+            "Amenity": Amenity,
+            "Review": Review,
+            "City": City,
+            "State": State
+        }
+        return class_names
 
     def save(self):
         """save serialized dictionary in a file"""
@@ -38,7 +58,9 @@ class FileStorage:
             with open(self.__file_path, 'r') as file_string:
                 objects = json.load(file_string)
                 for key, value in objects.items():
-                    obj = BaseModel(**value)
-                    self.__objects[key] = obj
+                    if value["__class__"] in self.classes().keys():
+                        obj_class = self.classes()[value["__class__"]]
+                        obj = obj_class(**value)
+                        self.__objects[key] = obj
         except FileNotFoundError:
             pass

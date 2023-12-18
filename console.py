@@ -1,9 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ importing the cmd module"""
 import cmd
 from models.base_model import BaseModel
 from models import storage
 from models.state import State
+from models.user import User
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
@@ -16,14 +17,14 @@ class HBNBCommand(cmd.Cmd):
     Basic implementation of the console
     """
     prompt = '(hbnb) '
-    class_names = ["BaseModel",
-                   "User",
-                   "Place",
-                   "State",
-                   "City",
-                   "Amenity",
-                   "Review"
-                   ]
+    class_names = {"BaseModel": BaseModel,
+                   "User": User,
+                   "Place": Place,
+                   "State": State,
+                   "City": City,
+                   "Amenity": Amenity,
+                   "Review": Review
+    }
 
     def do_EOF(self, line):
         """End of file used to quit the program"""
@@ -35,8 +36,8 @@ class HBNBCommand(cmd.Cmd):
         if not old_model:
             print("** class name missing **")
             return
-        if old_model in self.class_names:
-            new_model = BaseModel()
+        if old_model in self.class_names.keys():
+            new_model = self.class_names[old_model]()
             new_model.save()
             print(new_model.id)
         else:
@@ -94,6 +95,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, model):
         """show all instance according to class name or not"""
         obj_list = []
+        exist = False
         if model:
             args = model.split()
         if not model:
@@ -101,12 +103,14 @@ class HBNBCommand(cmd.Cmd):
             for key in storage.all().keys():
                 obj_list.append(str(storage.all()[key]))
             print(obj_list)
-        elif args[0] in self.class_names:
+        elif args[0] and args[0] in self.class_names.keys():
             for key in storage.all().keys():
                 model_name = key.split('.')
-                if args[0] == model_name:
+                if args[0] == model_name[0]:
+                    exist = True
                     obj_list.append(str(storage.all()[key]))
-            print(obj_list)
+            if exist is True:
+                print(obj_list)
         else:
             print("** class doesn't exist **")
 
@@ -128,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
             return
         my_key = all_arg[0] + '.' + all_arg[1]
-        if all_arg[0] in self.class_names:
+        if all_arg[0] in self.class_names.keys():
             for key in storage.all().keys():
                 if my_key == key:
                     setattr(storage.all()[key], all_arg[2], all_arg[3])
